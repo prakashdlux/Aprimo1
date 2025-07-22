@@ -45,7 +45,13 @@ jobs:
           distribution: 'temurin'
           cache: 'maven'  # Caches Maven dependencies for faster builds
 
-      - name: Build with Maven
+- name: Check for pom.xml
+  run: |
+    if [ ! -f "app/pom.xml" ]; then
+      echo "Error: pom.xml file not found!"
+      exit 1
+    fi
+
         run: mvn -B clean package --file pom.xml
         env:
           MAVEN_OPTS: -Dhttps.protocols=TLSv1.2
